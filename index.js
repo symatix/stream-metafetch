@@ -1,11 +1,12 @@
 var radio = require('radio-stream');
 var mongoose = require('mongoose');
 var parseMetaData = require('./utils/parseMetaData');
+var config = require('./config');
 
 // set up dbs
 var Stations = require('./models/stations');
 var Songs = require('./models/songs');
-mongoose.connect('mongodb://yammat:gazda.321@ds257851.mlab.com:57851/yammat', { useNewUrlParser: true });
+mongoose.connect(config.mongoUri, { useNewUrlParser: true });
 
 // find all stations from "stations collection, prepare event listener and 
 // push song changes to subdocument in "songs" collection on metadata event
