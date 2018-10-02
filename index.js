@@ -2,8 +2,7 @@ var radio = require('radio-stream');
 var mongoose = require('mongoose');
 var parseMetaData = require('./utils/parseMetaData');
 var config = require('./config');
-var log = require('./utils/log');
-var generateLog = require('./utils/generateLog');
+var date = require('./utils/date');
 
 // set up dbs
 var Stations = require('./models/stations');
@@ -28,8 +27,9 @@ Stations.find({}, function (err, stations) {
             Songs.findOneAndUpdate({ station }, 
                 {$push: { song_list: metadata }}, 
                 function(err, song){
-                    if (err) { return generateLog(log(err)); };
-                    generateLog(log(null, station, metadata));
+                    if (err) { return console.log(err) };
+                    var { artist, title } = metadata;
+                    console.log(`${date()} ==> ${station} => ${artist} - ${title}`)
             });
         })
     })
