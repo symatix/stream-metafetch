@@ -2,6 +2,8 @@ var radio = require('radio-stream');
 var mongoose = require('mongoose');
 var parseMetaData = require('./utils/parseMetaData');
 var config = require('./config');
+var log = require('./utils/log');
+var generateLog = require('./utils/generateLog');
 
 // set up dbs
 var Stations = require('./models/stations');
@@ -23,13 +25,13 @@ Stations.find({}, function (err, stations) {
     streams.forEach(({ station, readStream }) => {
         readStream.on("metadata", function(data){
             var metadata = parseMetaData(data)
-
-            Songs.findOneAndUpdate({ station }, 
-                {$push: { song_list: metadata }}, 
-                function(err, song){
-                    if (err) { return console.log(err) };
-                    console.log(`==> ${station} updated with [${metadata.artist} - ${metadata.title}]`)
-            });
+            generateLog(log(station, metadata));
+            // Songs.findOneAndUpdate({ station }, 
+            //     {$push: { song_list: metadata }}, 
+            //     function(err, song){
+            //         if (err) { return console.log(err) };
+            //         console.log(`==> ${station} updated with [${metadata.artist} - ${metadata.title}]`)
+            // });
         })
     })
 });
