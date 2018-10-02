@@ -7,6 +7,9 @@ module.exports = function(err,station, metadata){
     if (!artist && !title) data = "Data not present";
     if (artist && title) data = `${artist} - ${title}`
     if (err) data = err;
-    
-    return `${new Date().toLocaleTimeString()} ==> ${station} => [${data}]`
+
+    var msg = `${new Date().toLocaleTimeString()} ==> ${station} => [${data}]`;
+    console.log(msg)
+
+    return msg
 }
