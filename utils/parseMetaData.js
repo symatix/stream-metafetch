@@ -6,6 +6,7 @@ module.exports = function(str){
         
     return {
         artist: metadata[0],
-        title: metadata[1]
+        title: metadata[1],
+        date: Date.now
     }
 }
