@@ -25,13 +25,13 @@ Stations.find({}, function (err, stations) {
     streams.forEach(({ station, readStream }) => {
         readStream.on("metadata", function(data){
             var metadata = parseMetaData(data)
-            generateLog(log(station, metadata));
-            // Songs.findOneAndUpdate({ station }, 
-            //     {$push: { song_list: metadata }}, 
-            //     function(err, song){
-            //         if (err) { return console.log(err) };
-            //         console.log(`==> ${station} updated with [${metadata.artist} - ${metadata.title}]`)
-            // });
+            generateLog(log(null, station, metadata));
+            Songs.findOneAndUpdate({ station }, 
+                {$push: { song_list: metadata }}, 
+                function(err, song){
+                    if (err) { return generateLog(log(err)); };
+                    generateLog(log(null, station, metadata));
+            });
         })
     })
 });

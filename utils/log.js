@@ -1,4 +1,4 @@
-module.exports = function(station, metadata){
+module.exports = function(err,station, metadata){
     let {artist, title} = metadata;
     let data;
 
@@ -6,6 +6,7 @@ module.exports = function(station, metadata){
     if (artist && !title) data = artist;
     if (!artist && !title) data = "Data not present";
     if (artist && title) data = `${artist} - ${title}`
-
+    if (err) data = err;
+    
     return `${new Date().toLocaleTimeString()} ==> ${station} => [${data}]`
 }
